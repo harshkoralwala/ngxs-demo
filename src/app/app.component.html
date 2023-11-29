@@ -1,0 +1,76 @@
+<div>
+  <h1 class="text-center m-3">
+    <u>NGXS demo with local CRUD operation (Product module)</u>
+  </h1>
+
+  <div class="container-fluid h-100">
+    <div class="row">
+      <div class="col-4">
+        <div class="card mt-3">
+          <div class="card-body">
+            <form>
+              <div class="form-group">
+                <label class="m-1">Enter Product Name:</label>
+                <input type="text" id="form1" name="name" class="form-control m-1 w-60" [(ngModel)]="product.name"
+                  placeholder="Product Name" />
+                <button type="submit" class="btn btn-primary m-1" (click)="addProduct()" [disabled]="!product.name"
+                  *ngIf="product.id == -1">Add Product</button>
+                <button type="submit" class="btn btn-primary m-1" (click)="updateProduct()" [disabled]="!product.name"
+                  *ngIf="product.id != -1">Update Product</button>
+              </div> 
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <hr />
+    <div class="row">
+      <div class="col-8">
+        <div class="card mt-3">
+          <div class="card-body">
+            <h3 class="text-center m-3">All Product List</h3>
+            <table class="table table table-bordered ml-5">
+              <thead>
+                <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Edit</th>
+                  <th scope="col">Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <tr *ngFor="let product of allProducts$|async; index as i"> -->
+                <tr *ngFor="let currentProduct of allProducts; index as i"
+                  [ngClass]="{'table-active':currentProduct.id === product.id}">
+                  <td>{{ currentProduct.id }}</td>
+                  <td>{{ currentProduct.name }}</td>
+                  <td>
+                    <button type="button" class="btn btn-warning" (click)="onUpdateProductClick(currentProduct)"
+                      [disabled]="currentProduct.id === product.id">
+                      Edit
+                    </button>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-danger" (click)="deleteProduct(currentProduct)"
+                      [disabled]="currentProduct.id === product.id">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5>All Product Observable JSON</h5>
+            <pre><p>{{allProducts$|async|json}}</p></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
